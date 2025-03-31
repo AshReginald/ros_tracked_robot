@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="ros_tracked_robot">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.0130734817648772 0.0172872819635437 0.0297178850760488"
+        rpy="0 0 0" />
+      <mass
+        value="1.58749693033699" />
+      <inertia
+        ixx="0.00418899780402248"
+        ixy="-1.07515087205792E-18"
+        ixz="-1.92826208193088E-20"
+        iyy="0.00633806354929637"
+        iyz="3.5039899816404E-19"
+        izz="0.00973422182190229" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="arm0">
+    <inertial>
+      <origin
+        xyz="0.100819450888695 0.0555700117105585 0.0799745510323959"
+        rpy="0 0 0" />
+      <mass
+        value="0.398273847654276" />
+      <inertia
+        ixx="0.000634485399470533"
+        ixy="-1.31159423549741E-05"
+        ixz="-8.30428375685983E-09"
+        iyy="0.000993302757624267"
+        iyz="8.5566355998813E-07"
+        izz="0.000646441398122397" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/arm0.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.00784313725490196 0.23921568627451 0.823529411764706 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/arm0.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm0_joint"
+    type="fixed">
+    <origin
+      xyz="-0.113073481764877 0.0965559838073363 0.00452339044918062"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="arm0" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="arm1">
+    <inertial>
+      <origin
+        xyz="-0.00801134948793737 0.0734205789886848 0.0228148080779755"
+        rpy="0 0 0" />
+      <mass
+        value="0.114672786058552" />
+      <inertia
+        ixx="0.000360258963669393"
+        ixy="5.01270344280594E-05"
+        ixz="-3.40778836319629E-07"
+        iyy="2.34665223192783E-05"
+        iyz="2.9802662221828E-06"
+        izz="0.000378560990412323" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/arm1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.00784313725490196 0.23921568627451 0.823529411764706 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/arm1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm_1_joint"
+    type="revolute">
+    <origin
+      xyz="0.1 0.14 0.07"
+      rpy="0 0 0" />
+    <parent
+      link="arm0" />
+    <child
+      link="arm1" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="arm2">
+    <inertial>
+      <origin
+        xyz="-0.0649911913065071 0.0204483388549206 -0.0121077934414411"
+        rpy="0 0 0" />
+      <mass
+        value="0.0970492123410936" />
+      <inertia
+        ixx="3.40391687091534E-05"
+        ixy="8.12066177243064E-05"
+        ixz="-2.47379921257587E-06"
+        iyy="0.000307068327502307"
+        iyz="7.78336862575408E-07"
+        izz="0.000334782631167878" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/arm2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.00784313725490196 0.23921568627451 0.823529411764706 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/arm2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm_2_joint"
+    type="revolute">
+    <origin
+      xyz="-0.0262642027796428 0.167958898699502 0.0500000000000025"
+      rpy="0 0 0" />
+    <parent
+      link="arm1" />
+    <child
+      link="arm2" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="imu">
+    <inertial>
+      <origin
+        xyz="0 0.0075 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0045" />
+      <inertia
+        ixx="1.6875E-07"
+        ixy="3.28429327576129E-40"
+        ixz="7.38019806942672E-24"
+        iyy="2.34375E-07"
+        iyz="3.30872245021211E-24"
+        izz="2.34375E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/imu.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/imu.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="imu_joint"
+    type="fixed">
+    <origin
+      xyz="-0.0130734817648772 0.0165559838073364 0.00452339044918062"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="imu" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="camera">
+    <inertial>
+      <origin
+        xyz="0.00749999999999999 -0.0075 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0045" />
+      <inertia
+        ixx="2.34375E-07"
+        ixy="1.78406314515441E-24"
+        ixz="3.05990652195618E-24"
+        iyy="2.34375E-07"
+        iyz="-4.41162993361612E-24"
+        izz="1.6875E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/camera.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/camera.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camera_joint"
+    type="fixed">
+    <origin
+      xyz="-0.113073481764877 0.0165559838073364 0.0695233904491806"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="camera" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="wheel1">
+    <inertial>
+      <origin
+        xyz="-6.93889390390723E-18 0 0.015"
+        rpy="0 0 0" />
+      <mass
+        value="0.0942477796076938" />
+      <inertia
+        ixx="3.32812471739669E-05"
+        ixy="-6.63981408041818E-38"
+        ixz="5.29395592033942E-23"
+        iyy="3.32812471739669E-05"
+        iyz="-1.23977919813288E-37"
+        izz="5.24253274067797E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/wheel1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.247058823529412 1 0.552941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/wheel1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel1_joint"
+    type="continuous">
+    <origin
+      xyz="0.0369265182351228 0.126555983807336 0.0195233904491806"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel1" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="wheel2">
+    <inertial>
+      <origin
+        xyz="1.38777878078145E-17 0 0.015"
+        rpy="0 0 0" />
+      <mass
+        value="0.0942477796076938" />
+      <inertia
+        ixx="3.32812471739669E-05"
+        ixy="-6.63981408041817E-38"
+        ixz="3.46543352452811E-39"
+        iyy="3.32812471739669E-05"
+        iyz="4.59177480789956E-39"
+        izz="5.24253274067797E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/wheel2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.247058823529412 1 0.552941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/wheel2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel2_joint"
+    type="continuous">
+    <origin
+      xyz="-0.0630734817648772 0.126555983807336 0.0195233904491807"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel2" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="wheel3">
+    <inertial>
+      <origin
+        xyz="2.77555756156289E-17 -1.04083408558608E-17 -0.015"
+        rpy="0 0 0" />
+      <mass
+        value="0.0942477796076938" />
+      <inertia
+        ixx="3.32812471739669E-05"
+        ixy="-1.23373988362284E-21"
+        ixz="-1.05473006841133E-21"
+        iyy="3.32812471739669E-05"
+        iyz="1.42256425141682E-21"
+        izz="5.24253274067797E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/wheel3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.247058823529412 1 0.552941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/wheel3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel3_joint"
+    type="continuous">
+    <origin
+      xyz="-0.0630734817648772 -0.0934440161926637 0.0195233904491806"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel3" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="wheel4">
+    <inertial>
+      <origin
+        xyz="0 -2.42861286636753E-17 -0.015"
+        rpy="0 0 0" />
+      <mass
+        value="0.0942477796076938" />
+      <inertia
+        ixx="3.32812471739669E-05"
+        ixy="-3.01900244066541E-21"
+        ixz="2.09643985629254E-21"
+        iyy="3.32812471739669E-05"
+        iyz="-4.38169073862894E-22"
+        izz="5.24253274067797E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/wheel4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.247058823529412 1 0.552941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/wheel4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel4_joint"
+    type="continuous">
+    <origin
+      xyz="0.0369265182351228 -0.0934440161926637 0.0195233904491807"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel4" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="tracked_right">
+    <inertial>
+      <origin
+        xyz="0.0130734817648773 0.0195233904491807 5.55111512312578E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.0122203534541079" />
+      <inertia
+        ixx="1.08387865090016E-05"
+        ixy="-8.12146361841305E-21"
+        ixz="6.43003679289267E-21"
+        iyy="3.79241701442714E-05"
+        iyz="9.95201674477883E-22"
+        izz="4.69299036351568E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/tracked_right.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/tracked_right.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="tracked_right_joint"
+    type="fixed">
+    <origin
+      xyz="0 0.111555983807336 0"
+      rpy="1.5707963267949 0 3.14159265358979" />
+    <parent
+      link="base_link" />
+    <child
+      link="tracked_right" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="tracked_left">
+    <inertial>
+      <origin
+        xyz="0.0130734817648773 0.0195233904491807 -8.32667268468867E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.0122203534541079" />
+      <inertia
+        ixx="1.08387865090016E-05"
+        ixy="2.31692279908195E-20"
+        ixz="-3.68353866527529E-22"
+        iyy="3.79241701442713E-05"
+        iyz="-2.92158725167476E-21"
+        izz="4.69299036351567E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/tracked_left.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_tracked_robot/meshes/tracked_left.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="tracked_left_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.0784440161926636 0"
+      rpy="1.5707963267949 0 3.14159265358979" />
+    <parent
+      link="base_link" />
+    <child
+      link="tracked_left" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>
