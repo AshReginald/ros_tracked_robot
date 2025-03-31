@@ -4,6 +4,14 @@
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
   name="ros_tracked_robot">
+  
+  <link name="dummy_root_link"/>
+  <joint name="dummy_joint" type="fixed">
+  <parent link="dummy_root_link"/>
+  <child link="base_link"/>
+  <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
   <link
     name="base_link">
     <inertial>
@@ -150,10 +158,10 @@
     <axis
       xyz="0 0 -1" />
     <limit
-      lower="0"
-      upper="0"
-      effort="0"
-      velocity="0" />
+      lower="-1.5707963267949"
+      upper="1.5707963267949"
+      effort="100"
+      velocity="10" />
   </joint>
   <link
     name="arm2">
@@ -208,10 +216,10 @@
     <axis
       xyz="0 0 -1" />
     <limit
-      lower="0"
-      upper="0"
-      effort="0"
-      velocity="0" />
+      lower="-1.5707963267949"
+      upper="1.5707963267949"
+      effort="100"
+      velocity="10" />
   </joint>
   <link
     name="imu">
@@ -657,4 +665,139 @@
     <axis
       xyz="0 0 0" />
   </joint>
+
+<!-- plugin cho camera -->
+  <gazebo reference="camera">
+    <sensor name="camera_sensor" type="camera">
+      <always_on>1</always_on>
+      <update_rate>30</update_rate>
+      <camera>
+        <horizontal_fov>1.0472</horizontal_fov>
+        <image_width>640</image_width>
+        <image_height>480</image_height>
+        <near>0.1</near>
+        <far>100</far>
+      </camera>
+      <plugin name="camera_plugin" filename="libgazebo_ros_camera.so">
+        <topicName>/camera/image_raw</topicName>
+        <cameraName>camera</cameraName>
+        <frameName>camera</frameName>
+        <camera_info_topic_name>/camera/camera_info</camera_info_topic_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- plugin cho imu -->
+  <gazebo reference="imu">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>  
+  
+  <!-- transmission 2 tay may -->
+  <transmission name="arm_1_joint_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="arm_1_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="arm_1_actuator">
+      <mechanicalReduction>1.0</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="arm_2_joint_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="arm_2_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="arm_2_actuator">
+      <mechanicalReduction>1.0</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <!-- Thêm các transmission cho bánh xe -->
+  <transmission name="wheel1_joint_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel1_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel1_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="wheel2_joint_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel2_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel2_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="wheel3_joint_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel3_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel3_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="wheel4_joint_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel4_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel4_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <gazebo>
+    <plugin name="skid_steer_drive" filename="libgazebo_ros_skid_steer_drive.so">
+      <robotNamespace>/</robotNamespace>
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <torque>10.0</torque>
+      <covariance_x>0.001</covariance_x>
+      <covariance_y>0.001</covariance_y>
+      <covariance_yaw>0.01</covariance_yaw>
+
+      <leftFrontJoint>wheel4_joint</leftFrontJoint>   <!-- Bánh trước trái -->
+      <rightFrontJoint>wheel2_joint</rightFrontJoint> <!-- Bánh trước phải -->
+      <leftRearJoint>wheel3_joint</leftRearJoint>     <!-- Bánh sau trái -->
+      <rightRearJoint>wheel1_joint</rightRearJoint>   <!-- Bánh sau phải -->
+      <wheelSeparation>0.220004</wheelSeparation>     <!-- Khoảng cách trục Y giữa 2 bánh -->
+      <wheelDiameter>0.03</wheelDiameter>             <!-- Đường kính thực từ mesh -->
+
+      <broadcastTF>1</broadcastTF>
+      <updateRate>100.0</updateRate>
+    </plugin>
+  </gazebo>  
+
+  <gazebo>
+    <plugin name ="gazebo_ros_control" filename = "libgazebo_ros_control.so">
+        <robotNamespace>/</robotNamespace>
+    </plugin>
+  </gazebo> 
 </robot>

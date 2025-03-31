@@ -1,0 +1,13 @@
+<launch>
+  <!-- Gọi Gazebo và các cấu hình mô phỏng -->
+  <include file="$(find tracked_robot)/launch/gazebo.launch"/>
+
+  <!-- Gọi hiển thị và mô tả robot -->
+  <include file="$(find tracked_robot)/launch/display.launch"/>
+
+  <!-- (Tùy chọn) Điều khiển từ bàn phím -->
+  <node name="keyboard_control" 
+        pkg="tracked_robot" 
+        type="keyboard_control.py" 
+        output="screen"/>
+</launch>

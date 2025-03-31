@@ -1,1 +1,49 @@
-controller_joint_names: ['', 'arm_1_joint', 'arm_2_joint', 'wheel1_joint', 'wheel2_joint', 'wheel3_joint', 'wheel4_joint', ]
+# controller_joint_names: ['', 'arm_1_joint', 'arm_2_joint', 'wheel1_joint', 'wheel2_joint', 'wheel3_joint', 'wheel4_joint', ]
+# controllers.yaml
+controller_manager: 
+  ros__parameters:
+    update_rate: 100  # Hz
+
+skid_steer_controller:
+  type: diff_drive_controller/DiffDriveController
+  left_wheel: ['wheel3_joint', 'wheel4_joint']
+  right_wheel: ['wheel1_joint', 'wheel2_joint']
+  pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+  twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+  cmd_vel_timeout: 0.2
+  velocity_rolling_window_size: 10
+  enable_odom_tf: false
+  wheel_separation: 0.22
+  wheel_radius: 0.015
+  base_frame_id: base_link
+  odom_frame_id: odom
+  publish_rate: 50
+
+arm_controller:
+  type: position_controllers/JointGroupPositionController
+  joints:
+    - arm_1_joint
+    - arm_2_joint
+
+gazebo_ros_control:
+  pid_gains:
+    arm_1_joint: {p: 10.0, i: 0.01, d: 1.0}
+    arm_2_joint: {p: 10.0, i: 0.01, d: 1.0}
+    wheel1_joint: {p: 10.0, i: 0.01, d: 1.0}
+    wheel2_joint: {p: 10.0, i: 0.01, d: 1.0}
+    wheel3_joint: {p: 10.0, i: 0.01, d: 1.0}
+    wheel4_joint: {p: 10.0, i: 0.01, d: 1.0}
+
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+# Danh sách các khớp cần quản lý
+controller_joint_names: [
+  'arm_1_joint',
+  'arm_2_joint',
+  'wheel1_joint',
+  'wheel2_joint', 
+  'wheel3_joint',
+  'wheel4_joint'
+]
