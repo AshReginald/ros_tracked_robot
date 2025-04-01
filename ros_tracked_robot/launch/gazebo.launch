@@ -48,7 +48,7 @@
           args="0 0 0 0 0 0 base_link base_footprint 40" />
 
     <!-- Chạy script điều khiển bằng bàn phím -->
-    <node name="control_by_keyboard" pkg="ros_tracked_robot" type="control_by_keyboard.py" output="screen" />
+    <!-- <node name="control_by_keyboard" pkg="ros_tracked_robot" type="control_by_keyboard.py" output="screen" /> -->
 
     <!-- Fake joint calibration -->
     <node name="fake_joint_calibration" pkg="rostopic" type="rostopic" 

@@ -6,8 +6,8 @@
   <include file="$(find tracked_robot)/launch/display.launch"/>
 
   <!-- (Tùy chọn) Điều khiển từ bàn phím -->
-  <node name="keyboard_control" 
+  <!-- <node name="control_by_keyboard" 
         pkg="tracked_robot" 
-        type="keyboard_control.py" 
-        output="screen"/>
+        type="control_by_keyboard.py" 
+        output="screen"/> -->
 </launch>

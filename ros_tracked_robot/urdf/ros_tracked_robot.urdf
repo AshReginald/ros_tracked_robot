@@ -566,7 +566,7 @@
         xyz="0.018463 -0.0335 -5.5511E-17"
         rpy="0 0 0" />
       <mass
-        value="0.01222" />
+        value="0" />
       <inertia
         ixx="1.0839E-05"
         ixy="3.6965E-20"
@@ -589,7 +589,7 @@
           rgba="0.29804 0.29804 0.29804 1" />
       </material>
     </visual>
-    <collision>
+    <!-- <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -597,7 +597,7 @@
         <mesh
           filename="package://ros_tracked_robot/meshes/tracked_right.STL" />
       </geometry>
-    </collision>
+    </collision> -->
   </link>
   <joint
     name="tracked_right_joint"
@@ -642,7 +642,7 @@
           rgba="1 1 1 1" />
       </material>
     </visual>
-    <collision>
+    <!-- <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -650,7 +650,7 @@
         <mesh
           filename="package://ros_tracked_robot/meshes/tracked_left.STL" />
       </geometry>
-    </collision>
+    </collision> -->
   </link>
   <joint
     name="tracked_left_joint"
