@@ -787,8 +787,8 @@
       <rightFrontJoint>wheel2_joint</rightFrontJoint> 
       <leftRearJoint>wheel4_joint</leftRearJoint>     
       <rightRearJoint>wheel1_joint</rightRearJoint>  
-      <wheelSeparation>0.220004</wheelSeparation>     
-      <wheelDiameter>0.03</wheelDiameter>         
+      <wheelSeparation>0.19</wheelSeparation>     
+      <wheelDiameter>0.065</wheelDiameter>         
 
       <broadcastTF>1</broadcastTF>
       <updateRate>100.0</updateRate>
