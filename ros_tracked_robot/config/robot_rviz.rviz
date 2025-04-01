@@ -7,9 +7,11 @@ Panels:
         - /Global Options1
         - /Status1
         - /RobotModel1
+        - /RobotModel1/Status1
         - /Camera1
-        - /Image1
-        - /Odometry1
+        - /TF1
+        - /TF1/Status1
+        - /Imu1
       Splitter Ratio: 0.5
     Tree Height: 215
   - Class: rviz/Selection
@@ -148,8 +150,10 @@ Visualization Manager:
       Visibility:
         Grid: true
         Image: true
+        Imu: true
         Odometry: true
         RobotModel: true
+        TF: true
         Value: true
       Zoom Factor: 1
     - Class: rviz/Image
@@ -199,6 +203,88 @@ Visualization Manager:
       Topic: /skid_steer_controller/odom
       Unreliable: false
       Value: true
+    - Class: rviz/TF
+      Enabled: true
+      Filter (blacklist): ""
+      Filter (whitelist): ""
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+        arm0:
+          Value: true
+        arm1:
+          Value: true
+        arm2:
+          Value: true
+        base_footprint:
+          Value: true
+        base_link:
+          Value: true
+        camera:
+          Value: true
+        dummy_root_link:
+          Value: true
+        imu:
+          Value: true
+        odom:
+          Value: true
+        tracked_left:
+          Value: true
+        tracked_right:
+          Value: true
+        wheel1:
+          Value: true
+        wheel2:
+          Value: true
+        wheel3:
+          Value: true
+        wheel4:
+          Value: true
+      Marker Alpha: 1
+      Marker Scale: 0.5
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        dummy_root_link:
+          {}
+        odom:
+          base_link:
+            arm0:
+              arm1:
+                arm2:
+                  {}
+            base_footprint:
+              {}
+            camera:
+              {}
+            imu:
+              {}
+            tracked_left:
+              {}
+            tracked_right:
+              {}
+            wheel1:
+              {}
+            wheel2:
+              {}
+            wheel3:
+              {}
+            wheel4:
+              {}
+      Update Interval: 0
+      Value: true
+    - Alpha: 1
+      Class: rviz_plugin_tutorials/Imu
+      Color: 204; 51; 204
+      Enabled: true
+      History Length: 1
+      Name: Imu
+      Queue Size: 1
+      Topic: /imu
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -227,7 +313,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 4.307478427886963
+      Distance: 4.0331549644470215
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -235,17 +321,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: -0.08744154125452042
+        Y: -0.1565154492855072
+        Z: 0.3069692552089691
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.785398006439209
+      Pitch: 0.8303983807563782
       Target Frame: <Fixed Frame>
-      Yaw: 0.785398006439209
+      Yaw: 1.2703983783721924
     Saved: ~
 Window Geometry:
   Camera:

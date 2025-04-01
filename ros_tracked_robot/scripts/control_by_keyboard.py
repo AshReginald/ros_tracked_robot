@@ -17,8 +17,8 @@ class KeyboardControl:
         
         # Khởi tạo thông điệp Twist cho base
         self.twist = Twist()
-        self.linear_speed = 1.0   # Tốc độ tuyến tính (m/s)
-        self.angular_speed = 1.0  # Tốc độ góc (rad/s)
+        self.linear_speed = 0.1   # Tốc độ tuyến tính (m/s)
+        self.angular_speed = 0.1  # Tốc độ góc (rad/s)
         
         # Khởi tạo vị trí ban đầu và bước điều chỉnh cho các khớp
         self.joint1_pos = 0.0     # Vị trí arm_1

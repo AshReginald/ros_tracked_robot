@@ -378,7 +378,7 @@
     <child
       link="wheel1" />
     <axis
-      xyz="0 0 1" />
+      xyz="0 0 1" />         
     <limit
       lower="0"
       upper="0"
@@ -436,7 +436,7 @@
     <child
       link="wheel2" />
     <axis
-      xyz="0 0 1" />
+      xyz="0 0 1" />      
     <limit
       lower="0"
       upper="0"
@@ -702,7 +702,7 @@
         <gaussianNoise>0.0</gaussianNoise>
         <xyzOffset>0 0 0</xyzOffset>
         <rpyOffset>0 0 0</rpyOffset>
-        <frameName>imu_link</frameName>
+        <frameName>imu</frameName>
         <initialOrientationAsReference>false</initialOrientationAsReference>
       </plugin>
       <pose>0 0 0 0 0 0</pose>
@@ -783,17 +783,37 @@
       <covariance_y>0.001</covariance_y>
       <covariance_yaw>0.01</covariance_yaw>
 
-      <leftFrontJoint>wheel4_joint</leftFrontJoint>   <!-- Bánh trước trái -->
-      <rightFrontJoint>wheel2_joint</rightFrontJoint> <!-- Bánh trước phải -->
-      <leftRearJoint>wheel3_joint</leftRearJoint>     <!-- Bánh sau trái -->
-      <rightRearJoint>wheel1_joint</rightRearJoint>   <!-- Bánh sau phải -->
-      <wheelSeparation>0.220004</wheelSeparation>     <!-- Khoảng cách trục Y giữa 2 bánh -->
-      <wheelDiameter>0.03</wheelDiameter>             <!-- Đường kính thực từ mesh -->
+      <leftFrontJoint>wheel3_joint</leftFrontJoint>   
+      <rightFrontJoint>wheel2_joint</rightFrontJoint> 
+      <leftRearJoint>wheel4_joint</leftRearJoint>     
+      <rightRearJoint>wheel1_joint</rightRearJoint>  
+      <wheelSeparation>0.220004</wheelSeparation>     
+      <wheelDiameter>0.03</wheelDiameter>         
 
       <broadcastTF>1</broadcastTF>
       <updateRate>100.0</updateRate>
     </plugin>
   </gazebo>  
+
+  <gazebo reference="wheel1">
+    <mu1>2.0</mu1>   <!-- Ma sát tĩnh -->
+    <mu2>2.0</mu2>   <!-- Ma sát động -->
+  </gazebo>
+
+  <gazebo reference="wheel2">
+    <mu1>2.0</mu1>   <!-- Ma sát tĩnh -->
+    <mu2>2.0</mu2>   <!-- Ma sát động -->
+  </gazebo>
+
+  <gazebo reference="wheel3">
+    <mu1>2.0</mu1>   <!-- Ma sát tĩnh -->
+    <mu2>2.0</mu2>   <!-- Ma sát động -->
+  </gazebo>
+
+  <gazebo reference="wheel4">
+    <mu1>2.0</mu1>   <!-- Ma sát tĩnh -->
+    <mu2>2.0</mu2>   <!-- Ma sát động -->
+  </gazebo>
 
   <gazebo>
     <plugin name ="gazebo_ros_control" filename = "libgazebo_ros_control.so">
