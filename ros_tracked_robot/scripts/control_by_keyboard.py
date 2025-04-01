@@ -1,103 +1,139 @@
 #!/usr/bin/env python3
 import rospy
 from geometry_msgs.msg import Twist
-from std_msgs.msg import Float64
-import sys, tty, termios
+import sys
+import tty
+import termios
+import tty
 
-class KeyboardControl:
-    def __init__(self):
-        # Khởi tạo node ROS
-        rospy.init_node('keyboard_control')
-        
-        # Publisher cho base (xe tăng)
-        self.pub_base = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
-        # Publisher cho tay máy
-        self.pub_joint1 = rospy.Publisher('/arm_1_joint_controller/command', Float64, queue_size=10)
-        self.pub_joint2 = rospy.Publisher('/arm_2_joint_controller/command', Float64, queue_size=10)
-        
-        # Khởi tạo thông điệp Twist cho base
-        self.twist = Twist()
-        self.linear_speed = 0.1   # Tốc độ tuyến tính (m/s)
-        self.angular_speed = 0.1  # Tốc độ góc (rad/s)
-        
-        # Khởi tạo vị trí ban đầu và bước điều chỉnh cho các khớp
-        self.joint1_pos = 0.0     # Vị trí arm_1
-        self.joint2_pos = 0.0     # Vị trí arm_2
-        self.step = 0.5           # Bước điều chỉnh (theo code mới)
+# Các tốc độ mặc định
+MAX_LIN_VEL = 0.5    # m/s
+MAX_ANG_VEL = 1.5    # rad/s
+LIN_VEL_STEP = 0.1
+ANG_VEL_STEP = 0.1
 
-    def get_key(self):
-        """Lấy phím nhấn từ bàn phím"""
-        fd = sys.stdin.fileno()
-        old = termios.tcgetattr(fd)
-        try:
-            tty.setraw(fd)
-            key = sys.stdin.read(1)
-        finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old)
-        return key
+msg = """
+Control Your Robot!
+---------------------------
+Moving around:
+        W
+   A    S    D
+        X
 
-    def run(self):
-        # Hiển thị hướng dẫn điều khiển
-        rospy.loginfo("Điều khiển xe tăng: w: tiến, s: lùi, a: trái, d: phải, x: dừng")
-        rospy.loginfo("Điều khiển tay máy: 1: tăng arm_1, 2: giảm arm_1, 3: tăng arm_2, 4: giảm arm_2")
-        rospy.loginfo("Nhấn 'q' để thoát")
-        
-        rate = rospy.Rate(10)  # Tần suất 10 Hz
-        while not rospy.is_shutdown():
-            key = self.get_key()
-            
-            # Điều khiển base (xe tăng)
-            if key == 'w':
-                self.twist.linear.x = self.linear_speed
-                self.twist.angular.z = 0.0
-            elif key == 's':
-                self.twist.linear.x = -self.linear_speed
-                self.twist.angular.z = 0.0
-            elif key == 'a':
-                self.twist.linear.x = 0.0
-                self.twist.angular.z = self.angular_speed
-            elif key == 'd':
-                self.twist.linear.x = 0.0
-                self.twist.angular.z = -self.angular_speed
-            elif key == 'x':
-                self.twist.linear.x = 0.0
-                self.twist.angular.z = 0.0
+Q/E : Tăng/Giảm tốc độ
 
-            # Điều khiển tay máy 
-            if key == '1':
-                self.joint1_pos += self.step
-                if self.joint1_pos > 1.57:
-                    self.joint1_pos = 1.57
-            elif key == '2':
-                self.joint1_pos -= self.step
-                if self.joint1_pos < -1.57:
-                    self.joint1_pos = -1.57
-            elif key == '3':
-                self.joint2_pos += self.step
-                if self.joint2_pos > 1.57:
-                    self.joint2_pos = 1.57
-            elif key == '4':
-                self.joint2_pos -= self.step
-                if self.joint2_pos < -1.57:
-                    self.joint2_pos = -1.57
-            elif key == 'q':
-                self.twist.linear.x = 0.0
-                self.twist.angular.z = 0.0
-                self.pub_base.publish(self.twist)
-                break
-            
-            # Publish thông điệp
-            self.pub_base.publish(self.twist)
-            self.pub_joint1.publish(self.joint1_pos)
-            self.pub_joint2.publish(self.joint2_pos)
-            
-            # In ra vị trí hiện tại của các khớp
-            rospy.loginfo("Vi tri Arm_1: %.2f rad, Vi tri Arm_2: %.2f rad", self.joint1_pos, self.joint2_pos)
-            
-            rate.sleep()
+Space/S : Dừng
 
-if __name__ == "__main__":
+ESC : Thoát
+"""
+
+def getKey():
+    tty.setraw(sys.stdin.fileno())
+    key = sys.stdin.read(1)
+    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+    return key
+
+def vels(target_linear_vel, target_angular_vel):
+    return "Tốc độ hiện tại:\tlinear vel %s\t angular vel %s " % (target_linear_vel, target_angular_vel)
+
+def makeSimpleProfile(output, input, slop):
+    if input > output:
+        output = min(input, output + slop)
+    elif input < output:
+        output = max(input, output - slop)
+    else:
+        output = input
+    return output
+
+def constrain(input, low, high):
+    if input < low:
+        input = low
+    elif input > high:
+        input = high
+    else:
+        input = input
+    return input
+
+if __name__=="__main__":
+    settings = termios.tcgetattr(sys.stdin)
+    
+    rospy.init_node('robot_teleop')
+    pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+    
+    status = 0
+    target_linear_vel = 0.0
+    target_angular_vel = 0.0
+    control_linear_vel = 0.0
+    control_angular_vel = 0.0
+    
     try:
-        KeyboardControl().run()
-    except rospy.ROSInterruptException:
-        pass
+        print(msg)
+        while not rospy.is_shutdown():
+            key = getKey()
+            if key == '\x1b':  # ESC
+                break
+            elif key == 'w' or key == 'W':
+                target_linear_vel = constrain(target_linear_vel + LIN_VEL_STEP, -MAX_LIN_VEL, MAX_LIN_VEL)
+                status = status + 1
+                print(vels(target_linear_vel, target_angular_vel))
+            elif key == 'x' or key == 'X':
+                target_linear_vel = constrain(target_linear_vel - LIN_VEL_STEP, -MAX_LIN_VEL, MAX_LIN_VEL)
+                status = status + 1
+                print(vels(target_linear_vel, target_angular_vel))
+            elif key == 'a' or key == 'A':
+                target_angular_vel = constrain(target_angular_vel + ANG_VEL_STEP, -MAX_ANG_VEL, MAX_ANG_VEL)
+                status = status + 1
+                print(vels(target_linear_vel, target_angular_vel))
+            elif key == 'd' or key == 'D':
+                target_angular_vel = constrain(target_angular_vel - ANG_VEL_STEP, -MAX_ANG_VEL, MAX_ANG_VEL)
+                status = status + 1
+                print(vels(target_linear_vel, target_angular_vel))
+            elif key == ' ' or key == 's' or key == 'S':
+                target_linear_vel = 0.0
+                target_angular_vel = 0.0
+                control_linear_vel = 0.0
+                control_angular_vel = 0.0
+                print(vels(target_linear_vel, target_angular_vel))
+            elif key == 'q' or key == 'Q':
+                MAX_LIN_VEL = MAX_LIN_VEL + 0.1
+                MAX_ANG_VEL = MAX_ANG_VEL + 0.1
+                print("Tăng tốc độ:\tlinear %s\t angular %s " % (MAX_LIN_VEL, MAX_ANG_VEL))
+            elif key == 'e' or key == 'E':
+                MAX_LIN_VEL = MAX_LIN_VEL - 0.1
+                MAX_ANG_VEL = MAX_ANG_VEL - 0.1
+                print("Giảm tốc độ:\tlinear %s\t angular %s " % (MAX_LIN_VEL, MAX_ANG_VEL))
+            else:
+                if (key == '\x03'):
+                    break
+            
+            if status == 20:
+                print(msg)
+                status = 0
+
+            twist = Twist()
+
+            control_linear_vel = makeSimpleProfile(control_linear_vel, target_linear_vel, (LIN_VEL_STEP/2.0))
+            twist.linear.x = control_linear_vel
+            twist.linear.y = 0.0
+            twist.linear.z = 0.0
+
+            control_angular_vel = makeSimpleProfile(control_angular_vel, target_angular_vel, (ANG_VEL_STEP/2.0))
+            twist.angular.x = 0.0
+            twist.angular.y = 0.0
+            twist.angular.z = control_angular_vel
+
+            pub.publish(twist)
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        twist = Twist()
+        twist.linear.x = 0.0
+        twist.linear.y = 0.0
+        twist.linear.z = 0.0
+        twist.angular.x = 0.0
+        twist.angular.y = 0.0
+        twist.angular.z = 0.0
+        pub.publish(twist)
+        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
