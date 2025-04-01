@@ -1,13 +1,10 @@
 <launch>
-  <!-- Gọi Gazebo và các cấu hình mô phỏng -->
-  <include file="$(find tracked_robot)/launch/gazebo.launch"/>
+    <!-- Launch display.launch -->
+    <include file="$(find ros_tracked_robot)/launch/display.launch" />
 
-  <!-- Gọi hiển thị và mô tả robot -->
-  <include file="$(find tracked_robot)/launch/display.launch"/>
+    <!-- Launch gazebo.launch -->
+    <include file="$(find ros_tracked_robot)/launch/gazebo.launch" />
 
-  <!-- (Tùy chọn) Điều khiển từ bàn phím -->
-  <!-- <node name="control_by_keyboard" 
-        pkg="tracked_robot" 
-        type="control_by_keyboard.py" 
-        output="screen"/> -->
+    <!-- Run control_by_keyboard.py -->
+    <node name="control_by_keyboard" pkg="ros_tracked_robot" type="control_by_keyboard.py" output="screen" launch-prefix="python3" />
 </launch>

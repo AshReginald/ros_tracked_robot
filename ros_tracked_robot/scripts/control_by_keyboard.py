@@ -6,13 +6,12 @@ import sys
 import tty
 import termios
 
-# Các tốc độ mặc định
+# Default 
 MAX_LIN_VEL = 0.5    # m/s
 MAX_ANG_VEL = 1.5    # rad/s
-LIN_VEL_STEP = 0.1
-ANG_VEL_STEP = 0.1
-ARM_STEP = 0.1  # Bước tăng/giảm cho cánh tay
-
+LIN_VEL_STEP = 0.5
+ANG_VEL_STEP = 0.5
+ARM_STEP = 0.5  # Step for arrm
 msg = """
 Control Your Robot!
 ---------------------------
@@ -21,13 +20,13 @@ Moving around:
    A    S    D
         X
 
-Q/E : Tăng/Giảm tốc độ
+Q/E : Raise/Decrease speed
 
-Space/S : Dừng di chuyển
+Space/S : Stop
 
 Arm Control:
-R/F : Tăng/Giảm arm_1
-T/G : Tăng/Giảm arm_2
+R/F : Raise/Decrease arm_1
+T/G : Raise/Decrease arm_2
 
 ESC : Thoát
 """
@@ -39,7 +38,7 @@ def getKey():
     return key
 
 def vels(target_linear_vel, target_angular_vel):
-    return "Tốc độ hiện tại:\tlinear vel %s\t angular vel %s " % (target_linear_vel, target_angular_vel)
+    return "Current speed:\tlinear vel %s\t angular vel %s " % (target_linear_vel, target_angular_vel)
 
 def makeSimpleProfile(output, input, slop):
     if input > output:
@@ -57,10 +56,10 @@ if __name__=="__main__":
     settings = termios.tcgetattr(sys.stdin)
     
     rospy.init_node('robot_teleop')
-    # Publishers cho di chuyển
+    # Publishers 
     cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
     
-    # Publishers cho cánh tay
+    # Publishers for arm
     arm1_pub = rospy.Publisher('/arm_1_joint_controller/command', Float64, queue_size=10)
     arm2_pub = rospy.Publisher('/arm_2_joint_controller/command', Float64, queue_size=10)
     
@@ -70,10 +69,10 @@ if __name__=="__main__":
     control_linear_vel = 0.0
     control_angular_vel = 0.0
     
-    # Biến điều khiển cánh tay
+    # Arm
     arm1_pos = 0.0
     arm2_pos = 0.0
-    arm_limit = 1.57  # Giới hạn góc theo URDF
+    arm_limit = 1.57  # limit in URDF
     
     try:
         print(msg)
@@ -81,7 +80,7 @@ if __name__=="__main__":
             key = getKey()
             if key == '\x1b':  # ESC
                 break
-            # Điều khiển di chuyển
+            # key
             elif key == 'w' or key == 'W':
                 target_linear_vel = constrain(target_linear_vel + LIN_VEL_STEP, -MAX_LIN_VEL, MAX_LIN_VEL)
                 print(vels(target_linear_vel, target_angular_vel))
@@ -107,7 +106,7 @@ if __name__=="__main__":
                 MAX_ANG_VEL = max(0.1, MAX_ANG_VEL - 0.1)
                 print(f"Giảm tốc độ: linear {MAX_LIN_VEL}, angular {MAX_ANG_VEL}")
             
-            # Điều khiển cánh tay
+            # arm_controller
             elif key == 'r' or key == 'R':
                 arm1_pos = constrain(arm1_pos + ARM_STEP, -arm_limit, arm_limit)
                 print(f"Arm1: {arm1_pos:.2f} rad")
@@ -128,7 +127,7 @@ if __name__=="__main__":
                 print(msg)
                 status = 0
 
-            # Điều khiển di chuyển
+            # Move
             twist = Twist()
             control_linear_vel = makeSimpleProfile(control_linear_vel, target_linear_vel, LIN_VEL_STEP/2.0)
             twist.linear.x = control_linear_vel
@@ -136,7 +135,7 @@ if __name__=="__main__":
             twist.angular.z = control_angular_vel
             cmd_vel_pub.publish(twist)
             
-            # Gửi lệnh cho cánh tay
+            # Send cmd
             arm1_pub.publish(arm1_pos)
             arm2_pub.publish(arm2_pos)
 

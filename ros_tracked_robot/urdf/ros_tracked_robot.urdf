@@ -817,6 +817,14 @@
   </gazebo>
 
   <gazebo>
+    <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+      <frameName>base_link</frameName>
+      <bodyName>base_link</bodyName>
+      <topicName>ground_truth/odom</topicName>
+    </plugin>
+  </gazebo>
+  
+  <gazebo>
     <plugin name ="gazebo_ros_control" filename = "libgazebo_ros_control.so">
         <robotNamespace>/</robotNamespace>
     </plugin>
